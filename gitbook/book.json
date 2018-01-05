@@ -1,0 +1,20 @@
+{
+  "gitbook": "3.x.x",
+  "root": "./",
+  "plugins": ["edit-link", "theme-vuejs@git+https://github.com/pearofducks/gitbook-plugin-theme-vuejs.git", "-fontsettings", "github", "advanced-emoji@0.2.1"],
+  "pluginsConfig": {
+    "edit-link": {
+      "base": "https://github.com/hidayat.febiansyah/vue-h-zoom/tree/dev/gitbook",
+      "label": "Edit This Page"
+    },
+    "github": {
+      "url": "https://github.com/hidayat.febiansyah/vue-h-zoom/"
+    }
+  },
+  "links": {
+    "sharing": {
+      "facebook": false,
+      "twitter": false
+    }
+  }
+}
