@@ -62,7 +62,7 @@ Use in template for example as:
 ## image
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/bliblidotcom/vue-h-zoom/dev/docs/vue-h-zoom-preview.png">
+  <img src="https://raw.githubusercontent.com/bliblidotcom/vue-h-zoom/dev/docs/vue-h-zoom-preview.jpg">
 </p>
 
 
