@@ -1,14 +1,8 @@
 /* @flow */
-function plugin (Vue: any, options: Object = {}) {
-  Vue.prototype.$add = (a: number, b: number): number => {
-    return a + b
+import plugin from './libs/VueHZoom.vue'
+
+module.exports = {
+  install: function (Vue, options) {
+    Vue.component('vue-h-zoom', plugin)
   }
-}
-
-plugin.version = '__VERSION__'
-
-export default plugin
-
-if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(plugin)
 }

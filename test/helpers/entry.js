@@ -6,3 +6,4 @@ Vue.config.productionTip = false
 Vue.use(plugin)
 
 window.Vue = Vue
+Vue.config.debug = true
