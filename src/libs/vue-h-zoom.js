@@ -36,7 +36,7 @@ export default {
   },
   data () {
     return {
-      visibleZoom: true,
+      visibleZoom: false,
       pointer: {
         x: 0,
         y: 0
@@ -44,23 +44,12 @@ export default {
       thumbnailPos: {}
     }
   },
-  mounted () {
-    this.updateThumbnailPos()
-    window.addEventListener('resize', this.updateThumbnailPos)
-    // second call to make sure the location is updated
-    // one thousan ms is just a guess for safety
-    setTimeout(() => {
-      this.updateThumbnailPos()
-    }, 1000)
-  },
-  beforeDestroy: function () {
-    window.removeEventListener('resize', this.updateThumbnailPos)
-  },
   methods: {
     toPx: function (v) {
       return v + 'px'
     },
     mouseEnter: function () {
+      this.updateThumbnailPos()
       this.visibleZoom = true
     },
     mouseLeave: function () {
