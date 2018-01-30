@@ -75,7 +75,7 @@ webpack config:
 | width           | Number                                           | 200 | Width of thumbnail in px|
 | height          | Number                                           | 200 | Height of thumbnail in px|
 | zoom-level      | Number                                           | 4 | Zoom level |
-| -size | Number                                          | 2 | Zoom window size multiplier, relative with thumbnail size |
+| zoom-window-size | Number                                          | 2 | Zoom window size multiplier, relative with thumbnail size |
 | zoom-window-x | Number                                        | 300 | Location absolute on x-axis for zoom window |
 | zoom-window-y | Number                                        | 300 | Location absolute on y-axis for zoom window |
 
