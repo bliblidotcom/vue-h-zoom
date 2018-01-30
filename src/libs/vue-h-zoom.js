@@ -47,6 +47,11 @@ export default {
   mounted () {
     this.updateThumbnailPos()
     window.addEventListener('resize', this.updateThumbnailPos)
+    // second call to make sure the location is updated
+    // one thousan ms is just a guess for safety
+    setTimeout(() => {
+      this.updateThumbnailPos()
+    }, 1000)
   },
   beforeDestroy: function () {
     window.removeEventListener('resize', this.updateThumbnailPos)
