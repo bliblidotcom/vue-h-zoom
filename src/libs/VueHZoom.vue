@@ -7,6 +7,7 @@
          @mouseleave="mouseLeave"
          @mousemove.self="followMouse">
       <div :style="pointerBoxStyle"
+           @mouseenter="mouseEnter"
            @mousemove.self = "followMouse"
            v-if="visibleZoom"></div>
     </div>
