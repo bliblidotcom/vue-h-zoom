@@ -46,6 +46,26 @@ Use in template for example as:
   :zoom-level="4"></vue-h-zoom>
 ```
 
+## Important notes
+
+To be able to import image locally, you need to register the vue-h-zoom tag to the vue loader, add this to your
+webpack config:
+
+``` js
+{
+  test: /\.vue$/,
+  loader: 'vue-loader',
+  options: {
+    loaders: {
+    },
+    // other vue-loader options go here
+    transformToRequire: {
+      'vue-h-zoom': ['image', 'image-full']
+    }
+  }
+},
+```
+
 ## Parameters
 
 | Attribute        | Type                                            | Default              | Description      |
@@ -59,7 +79,7 @@ Use in template for example as:
 | zoom-window-x | Number                                        | 300 | Location absolute on x-axis for zoom window |
 | zoom-window-y | Number                                        | 300 | Location absolute on y-axis for zoom window |
 
-## image
+## Preview
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/bliblidotcom/vue-h-zoom/master/docs/vue-h-zoom-preview.jpg">
