@@ -67,6 +67,7 @@ export default {
         top: el.offsetTop,
         left: el.offsetLeft
       }
+      console.log(this.thumbnailPos)
     }
   },
   computed: {
