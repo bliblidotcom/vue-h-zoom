@@ -1,7 +1,7 @@
 # vue-h-zoom
 
 
-[![codecov](https://codecov.io/gh/bliblidotcom/vue-h-zoom/branch/dev/graph/badge.svg)](https://codecov.io/gh/hidayat.febiansyah/vue-h-zoom)
+[![codecov](https://codecov.io/gh/bliblidotcom/vue-h-zoom/branch/dev/graph/badge.svg)](https://codecov.io/gh/bliblidotcom/vue-h-zoom)
 [![npm](https://img.shields.io/npm/v/vue-h-zoom.svg)](https://www.npmjs.com/package/vue-h-zoom)
 [![vue2](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://vuejs.org/)
 
