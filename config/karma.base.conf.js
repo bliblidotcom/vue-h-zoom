@@ -1,11 +1,32 @@
+const path = require('path')
 const webpack = require('webpack')
 
+function resolve (dir) {
+  return path.join(__dirname, '..', dir)
+}
+
 const webpackConfig = {
+  resolve: {
+    extensions: ['.js', '.vue'],
+    alias: {
+      vue: 'vue/dist/vue.js',
+      '@': resolve('src')
+    }
+  },
   module: {
     loaders: [{
       test: /\.js$/,
       exclude: /node_modules|vue\/dist/,
       loader: 'babel-loader'
+    },
+    {
+      test: /\.vue$/,
+      loader: 'vue-loader',
+      options: {
+        loaders: {
+          js: 'babel-loader!eslint-loader'
+        }
+      }
     }]
   },
   plugins: [

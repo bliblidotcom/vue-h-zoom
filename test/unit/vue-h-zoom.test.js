@@ -26,6 +26,18 @@ describe('VueHZoom', () => {
       }).then(done)
     })
 
+    it('largeImage should be /abc.jpg', done => {
+      vm = new (Vue.extend(VueHZoom))({
+        propsData: {
+          image: '/abc.jpg'
+        }
+      })
+
+      nextTick(() => {
+        assert(vm.largeImage === '/abc.jpg', 'You should be implemented!!')
+      }).then(done)
+    })
+
     it('largeImage should be /abc_full.jpg', done => {
       vm = new (Vue.extend(VueHZoom))({
         propsData: {
@@ -85,6 +97,113 @@ describe('VueHZoom', () => {
         left: el.offsetLeft
       }
       assert.deepEqual(vm.thumbnailPos, loc)
+    })
+  })
+
+  describe('zoom dimensions', () => {
+    it('should multiply thumbnail dimension', () => {
+      assert((vm.zoomWindowSize * vm.width) === vm.zoomWidth)
+      assert((vm.zoomWindowSize * vm.height) === vm.zoomHeight)
+    })
+  })
+
+  describe('thumbnailStyle', () => {
+    it('should have correct values', () => {
+      vm.height = 1000
+      vm.width = 100
+      const expected = {
+        'background-image': `url(${vm.image})`,
+        'background-size': 'cover',
+        height: vm.toPx(1000),
+        width: vm.toPx(100)
+      }
+      assert.deepEqual(vm.thumbnailStyle, expected)
+    })
+  })
+
+  describe('containerStyle', () => {
+    it('should have correct values', () => {
+      const expected = {
+        height: vm.toPx(vm.zoomHeight),
+        width: vm.toPx(vm.zoomWidth),
+        left: vm.toPx(vm.zoomWindowX),
+        top: vm.toPx(vm.zoomWindowY),
+        position: 'absolute',
+        overflow: 'hidden'
+      }
+      assert.deepEqual(vm.containerStyle, expected)
+    })
+  })
+
+  describe('zoomStyle', () => {
+    it('should calculate correctly', () => {
+      vm.width = 400
+      vm.height = 500
+      vm.pointer = {
+        x: 200,
+        y: 300
+      }
+      vm.thumbnailPos = {
+        left: 50,
+        top: 100
+      }
+      vm.zoomWindowSize = 3
+      // the position of mouse, relative to the element, and multiply by window size, because it will be reflected
+      // in zoom window
+      const posX = -(200 - 50 - 200) * 3
+      const posY = -(300 - 100 - 250) * 3
+
+      const expected = {
+        'background-image': `url(${vm.largeImage})`,
+        'background-repeat': 'no-repeat',
+        'background-position': vm.toPx(posX) + ' ' + vm.toPx(posY),
+        'background-size': 'cover',
+        width: '100%',
+        height: '100%',
+        '-webkit-transform': `scale(${vm.zoomLevel})`,
+        transform: `scale(${vm.zoomLevel})`
+      }
+
+      assert.deepEqual(vm.zoomStyle, expected)
+    })
+  })
+
+  describe('pointerBoxStyle', () => {
+    it('should calculate correctly', () => {
+      vm.width = 600
+      vm.height = 800
+      vm.zoomLevel = 8
+      const width = vm.width / vm.zoomLevel
+      const height = vm.height / vm.zoomLevel
+
+      // set zoom lense offset
+      vm.pointer = {
+        x: 200,
+        y: 300
+      }
+      vm.thumbnailPos = {
+        left: 50,
+        top: 100
+      }
+
+      // position after padding the margin
+      const top = 300 - (height / 2) - 100
+      const left = 200 - (width / 2) - 50
+      const expected = {
+        position: 'absolute',
+        'z-index': '999',
+        transform: 'translateZ(0px)',
+        top: vm.toPx(top),
+        left: vm.toPx(left),
+        width: vm.toPx(width),
+        height: vm.toPx(height),
+        background: 'gray',
+        opacity: 0.3,
+        border: '1px solid white',
+        cursor: 'crosshair'
+      }
+
+      assert.deepEqual(vm.pointerBoxStyle, expected)
     })
   })
 })
