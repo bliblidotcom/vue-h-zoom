@@ -129,9 +129,110 @@ describe('VueHZoom', () => {
         left: vm.toPx(vm.zoomWindowX),
         top: vm.toPx(vm.zoomWindowY),
         position: 'absolute',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        border: '1px solid #ccc'
       }
       assert.deepEqual(vm.containerStyle, expected)
+    })
+  })
+
+  describe('zoomPosX', () => {
+    it('should calculate correctly', () => {
+      vm.width = 400
+      vm.height = 500
+      vm.pointer = {
+        x: 200,
+        y: 300
+      }
+      vm.thumbnailPos = {
+        left: 50,
+        top: 100
+      }
+      vm.zoomLevel = 2
+      vm.zoomWindowSize = 3
+      assert.deepEqual(vm.zoomPosX, 150)
+    })
+  })
+
+  describe('zoomPosY', () => {
+    it('should calculate correctly', () => {
+      vm.width = 400
+      vm.height = 500
+      vm.pointer = {
+        x: 200,
+        y: 300
+      }
+      vm.thumbnailPos = {
+        left: 50,
+        top: 100
+      }
+      vm.zoomLevel = 2
+      vm.zoomWindowSize = 3
+      assert.deepEqual(vm.zoomPosY, 150)
+    })
+  })
+
+  describe('pointerWidth', () => {
+    it('should calculate correctly', () => {
+      vm.width = 400
+      vm.zoomLevel = 2
+      assert.deepEqual(vm.pointerWidth, 200)
+    })
+  })
+
+  describe('pointerHeight', () => {
+    it('should calculate correctly', () => {
+      vm.height = 100
+      vm.zoomLevel = 2
+      assert.deepEqual(vm.pointerHeight, 50)
+    })
+  })
+
+  describe('pointerOffsetTop', () => {
+    it('should calculate correctly', () => {
+      vm.height = 100
+      vm.zoomLevel = 2
+      vm.pointer = {
+        x: 200,
+        y: 300
+      }
+      vm.thumbnailPos = {
+        left: 50,
+        top: 100
+      }
+      assert.deepEqual(vm.pointerOffsetTop, 50)
+    })
+  })
+
+  describe('pointerOffsetLeft', () => {
+    it('should calculate correctly', () => {
+      vm.height = 100
+      vm.zoomLevel = 2
+      vm.pointer = {
+        x: 200,
+        y: 300
+      }
+      vm.thumbnailPos = {
+        left: 50,
+        top: 100
+      }
+      assert.deepEqual(vm.pointerOffsetLeft, 100)
+    })
+  })
+
+  describe('pointerEdgeX', () => {
+    it('should calculate correctly', () => {
+      vm.width = 400
+      vm.zoomLevel = 2
+      assert.deepEqual(vm.pointerEdgeX, 200)
+    })
+  })
+
+  describe('pointerEdgeY', () => {
+    it('should calculate correctly', () => {
+      vm.height = 400
+      vm.zoomLevel = 2
+      assert.deepEqual(vm.pointerEdgeY, 200)
     })
   })
 
@@ -198,7 +299,7 @@ describe('VueHZoom', () => {
         width: vm.toPx(width),
         height: vm.toPx(height),
         background: 'gray',
-        opacity: 0.3,
+        opacity: 0.5,
         border: '1px solid white',
         cursor: 'crosshair'
       }

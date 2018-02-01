@@ -11,7 +11,7 @@
            @mousemove.self = "followMouse"
            v-if="visibleZoom"></div>
     </div>
-    <div :style="containerStyle"
+    <div :style="containerStyle" class="img-zoom-container"
          v-if="visibleZoom">
       <div :style="zoomStyle"></div>
     </div>
@@ -22,6 +22,12 @@
   .thumbnail-area {
     overflow: hidden;
     position: relative;
+  }
+  .img-zoom-container {
+    -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
+    z-index: 999;
   }
 </style>
 
