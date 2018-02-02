@@ -140,10 +140,11 @@ export default {
       return left
     },
     pointerEdgeX: function () {
-      return this.width - this.pointerWidth
+      // you have to bound it within the reduced with from pointerwidth multiplied by half zoom window size
+      return (this.width - this.pointerWidth) * (this.zoomWindowSize / 2)
     },
     pointerEdgeY: function () {
-      return this.height - this.pointerHeight
+      return (this.height - this.pointerHeight) * (this.zoomWindowSize / 2)
     },
     pointerBoxStyle: function () {
       return {
