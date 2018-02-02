@@ -15,6 +15,6 @@ import VueHZoom from './libs/VueHZoom.vue'
 new window.Vue({
   el: 'app',
   template: `<vue-h-zoom image="/assets/bugatti-chiron-white_01_thumb.jpg"
-              image-full="/assets/bugatti-chiron-white_01.jpg" :zoom-level="4"></vue-h-zoom>`,
+              image-full="/assets/bugatti-chiron-white_01.jpg" :zoom-level="2"></vue-h-zoom>`,
   components: { VueHZoom }
 })

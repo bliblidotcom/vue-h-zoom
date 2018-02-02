@@ -67,7 +67,6 @@ export default {
         top: el.offsetTop,
         left: el.offsetLeft
       }
-      console.log(this.thumbnailPos)
     }
   },
   computed: {
@@ -92,18 +91,29 @@ export default {
         left: this.toPx(this.zoomWindowX),
         top: this.toPx(this.zoomWindowY),
         position: 'absolute',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        border: '1px solid #ccc'
       }
     },
-    zoomStyle: function () {
+    zoomPosX: function () {
       const xPad = this.width / 2
-      const yPad = this.height / 2
       const posX = -(this.pointer.x - this.thumbnailPos.left - xPad) * this.zoomWindowSize
+      if (posX > this.pointerEdgeX) return this.pointerEdgeX
+      if (posX < (this.pointerEdgeX * -1)) return (this.pointerEdgeX * -1)
+      return posX
+    },
+    zoomPosY: function () {
+      const yPad = this.height / 2
       const posY = -(this.pointer.y - this.thumbnailPos.top - yPad) * this.zoomWindowSize
+      if (posY > this.pointerEdgeY) return this.pointerEdgeY
+      if (posY < (this.pointerEdgeY * -1)) return (this.pointerEdgeY * -1)
+      return posY
+    },
+    zoomStyle: function () {
       return {
         'background-image': `url(${this.largeImage})`,
         'background-repeat': 'no-repeat',
-        'background-position': this.toPx(posX) + ' ' + this.toPx(posY),
+        'background-position': this.toPx(this.zoomPosX) + ' ' + this.toPx(this.zoomPosY),
         'background-size': 'cover',
         width: '100%',
         height: '100%',
@@ -111,21 +121,41 @@ export default {
         transform: `scale(${this.zoomLevel})`
       }
     },
+    pointerWidth: function () {
+      return this.width / this.zoomLevel
+    },
+    pointerHeight: function () {
+      return this.height / this.zoomLevel
+    },
+    pointerOffsetTop: function () {
+      const top = this.pointer.y - (this.pointerHeight / 2) - this.thumbnailPos.top
+      if (top < 0) return 0
+      if (top > (this.height - this.pointerHeight)) return (this.height - this.pointerHeight)
+      return top
+    },
+    pointerOffsetLeft: function () {
+      const left = this.pointer.x - (this.pointerWidth / 2) - this.thumbnailPos.left
+      if (left < 0) return 0
+      if (left > (this.width - this.pointerWidth)) return (this.width - this.pointerWidth)
+      return left
+    },
+    pointerEdgeX: function () {
+      return this.width - this.pointerWidth
+    },
+    pointerEdgeY: function () {
+      return this.height - this.pointerHeight
+    },
     pointerBoxStyle: function () {
-      const width = this.width / this.zoomLevel
-      const height = this.height / this.zoomLevel
-      const top = this.pointer.y - (height / 2) - this.thumbnailPos.top
-      const left = this.pointer.x - (width / 2) - this.thumbnailPos.left
       return {
         position: 'absolute',
         'z-index': '999',
         transform: 'translateZ(0px)',
-        top: this.toPx(top),
-        left: this.toPx(left),
-        width: this.toPx(width),
-        height: this.toPx(height),
+        top: this.toPx(this.pointerOffsetTop),
+        left: this.toPx(this.pointerOffsetLeft),
+        width: this.toPx(this.pointerWidth),
+        height: this.toPx(this.pointerHeight),
         background: 'gray',
-        opacity: 0.3,
+        opacity: 0.5,
         border: '1px solid white',
         cursor: 'crosshair'
       }
