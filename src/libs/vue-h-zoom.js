@@ -57,8 +57,8 @@ export default {
     },
     followMouse: function (e) {
       this.pointer = {
-        x: e.pageX,
-        y: e.pageY
+        x: e.pageX - this.$refs.thumbnail.getBoundingClientRect().left - window.scrollX,
+        y: e.pageY - this.$refs.thumbnail.getBoundingClientRect().top - window.scrollY
       }
     },
     updateThumbnailPos: function () {
@@ -96,14 +96,14 @@ export default {
       }
     },
     zoomPosX: function () {
-      const xPad = this.width / 1.3
+      const xPad = this.width / 2
       const posX = -(this.pointer.x - this.thumbnailPos.left - xPad) * this.zoomWindowSize
       if (posX > this.pointerEdgeX) return this.pointerEdgeX
       if (posX < (this.pointerEdgeX * -1)) return (this.pointerEdgeX * -1)
       return posX
     },
     zoomPosY: function () {
-      const yPad = this.height / 1.2
+      const yPad = (this.height / 2)
       const posY = -(this.pointer.y - this.thumbnailPos.top - yPad) * this.zoomWindowSize
       if (posY > this.pointerEdgeY) return this.pointerEdgeY
       if (posY < (this.pointerEdgeY * -1)) return (this.pointerEdgeY * -1)
@@ -128,13 +128,13 @@ export default {
       return this.height / this.zoomLevel
     },
     pointerOffsetTop: function () {
-      const top = this.pointer.y - this.pointerHeight - this.thumbnailPos.top
+      const top = this.pointer.y - (this.pointerHeight / 2) - this.thumbnailPos.top
       if (top < 0) return 0
       if (top > (this.height - this.pointerHeight)) return (this.height - this.pointerHeight)
       return top
     },
     pointerOffsetLeft: function () {
-      const left = this.pointer.x - this.pointerWidth - this.thumbnailPos.left
+      const left = this.pointer.x - (this.pointerWidth / 2) - this.thumbnailPos.left
       if (left < 0) return 0
       if (left > (this.width - this.pointerWidth)) return (this.width - this.pointerWidth)
       return left
