@@ -81,16 +81,18 @@ export default {
       return this.zoomWindowSize * this.height
     },
     thumbnailStyle: function () {
-      return {
+      return this.containImage ? {
+        'background-image': `url(${this.image})`,
+        'background-size': 'contain',
+        'background-repeat': 'no-repeat',
+        'background-position': '50% 50%',
+        height: this.toPx(this.height),
+        width: this.toPx(this.width)
+      } : {
         'background-image': `url(${this.image})`,
         'background-size': 'cover',
         height: this.toPx(this.height),
-        width: this.toPx(this.width),
-        ...(this.containImage && {
-          'background-size': 'contain',
-          'background-repeat': 'no-repeat',
-          'background-position': '50% 50%',
-        })
+        width: this.toPx(this.width)
       }
     },
     containerStyle: function () {
@@ -119,7 +121,20 @@ export default {
       return posY
     },
     zoomStyle: function () {
-      return {
+      return this.containImage ? {
+        'background-image': `url(${this.largeImage})`,
+        'background-repeat': 'no-repeat',
+        'background-position': '50% 50%',
+        'background-size': 'contain',
+        'background-color': '#fff',
+        width: '100%',
+        height: '100%',
+        '-webkit-transform': `scale(${this.zoomLevel})`,
+        transform: `
+          scale(${this.zoomLevel})
+          translate(${this.toPx(this.zoomPosX)}, ${this.toPx(this.zoomPosY)})
+        `
+      } : {
         'background-image': `url(${this.largeImage})`,
         'background-repeat': 'no-repeat',
         'background-position': this.toPx(this.zoomPosX) + ' ' + this.toPx(this.zoomPosY),
@@ -127,16 +142,7 @@ export default {
         width: '100%',
         height: '100%',
         '-webkit-transform': `scale(${this.zoomLevel})`,
-        transform: `scale(${this.zoomLevel})`,
-        ...(this.containImage && {
-          'background-position': '50% 50%',
-          'background-size': 'contain',
-          'background-color': '#fff',
-          transform: `
-            scale(${this.zoomLevel})
-            translate(${this.toPx(this.zoomPosX)}, ${this.toPx(this.zoomPosY)})
-          `
-        })
+        transform: `scale(${this.zoomLevel})`
       }
     },
     pointerWidth: function () {
