@@ -113,13 +113,32 @@ describe('VueHZoom', () => {
       vm.width = 100
       const expected = {
         'background-image': `url(${vm.image})`,
+        'background-size': 'cover',
+        height: vm.toPx(1000),
+        width: vm.toPx(100)
+      }
+      assert.deepEqual(vm.thumbnailStyle, expected)
+    })
+    it('should have correct values when containImage prop is true', done => {
+      vm = new (Vue.extend(VueHZoom))({
+        propsData: {
+          image: '/abc.jpg',
+          containImage: true
+        }
+      })
+      vm.height = 1000
+      vm.width = 100
+      const expected = {
+        'background-image': `url(${vm.image})`,
         'background-size': 'contain',
         'background-repeat': 'no-repeat',
         'background-position': '50% 50%',
         height: vm.toPx(1000),
         width: vm.toPx(100)
       }
-      assert.deepEqual(vm.thumbnailStyle, expected)
+      nextTick(() => {
+        assert.deepEqual(vm.thumbnailStyle, expected)
+      }).then(done)
     })
   })
 
@@ -259,6 +278,43 @@ describe('VueHZoom', () => {
       const expected = {
         'background-image': `url(${vm.largeImage})`,
         'background-repeat': 'no-repeat',
+        'background-position': vm.toPx(posX) + ' ' + vm.toPx(posY),
+        'background-size': 'cover',
+        width: '100%',
+        height: '100%',
+        '-webkit-transform': `scale(${vm.zoomLevel})`,
+        transform: `scale(${vm.zoomLevel})`
+      }
+
+      assert.deepEqual(vm.zoomStyle, expected)
+    })
+
+    it('should calculate correctly when containImage prop is true', done => {
+      vm = new (Vue.extend(VueHZoom))({
+        propsData: {
+          image: '/abc.jpg',
+          containImage: true
+        }
+      })
+      vm.width = 400
+      vm.height = 500
+      vm.pointer = {
+        x: 200,
+        y: 300
+      }
+      vm.thumbnailPos = {
+        left: 50,
+        top: 100
+      }
+      vm.zoomWindowSize = 3
+      // the position of mouse, relative to the element, and multiply by window size, because it will be reflected
+      // in zoom window
+      const posX = -(200 - 50 - 200) * 3
+      const posY = -(300 - 100 - 250) * 3
+
+      const expected = {
+        'background-image': `url(${vm.largeImage})`,
+        'background-repeat': 'no-repeat',
         'background-position': '50% 50%',
         'background-size': 'cover',
         'background-size': 'contain',
@@ -271,8 +327,9 @@ describe('VueHZoom', () => {
           translate(${vm.toPx(vm.zoomPosX)}, ${vm.toPx(vm.zoomPosY)})
         `
       }
-
-      assert.deepEqual(vm.zoomStyle, expected)
+      nextTick(() => {
+        assert.deepEqual(vm.zoomStyle, expected)
+      }).then(done)
     })
   })
 
