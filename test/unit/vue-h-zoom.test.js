@@ -113,7 +113,9 @@ describe('VueHZoom', () => {
       vm.width = 100
       const expected = {
         'background-image': `url(${vm.image})`,
-        'background-size': 'cover',
+        'background-size': 'contain',
+        'background-repeat': 'no-repeat',
+        'background-position': '50% 50%',
         height: vm.toPx(1000),
         width: vm.toPx(100)
       }
@@ -257,12 +259,17 @@ describe('VueHZoom', () => {
       const expected = {
         'background-image': `url(${vm.largeImage})`,
         'background-repeat': 'no-repeat',
-        'background-position': vm.toPx(posX) + ' ' + vm.toPx(posY),
+        'background-position': '50% 50%',
         'background-size': 'cover',
+        'background-size': 'contain',
+        'background-color': '#fff',
         width: '100%',
         height: '100%',
         '-webkit-transform': `scale(${vm.zoomLevel})`,
-        transform: `scale(${vm.zoomLevel})`
+        transform: `
+          scale(${vm.zoomLevel})
+          translate(${vm.toPx(vm.zoomPosX)}, ${vm.toPx(vm.zoomPosY)})
+        `
       }
 
       assert.deepEqual(vm.zoomStyle, expected)
@@ -292,7 +299,7 @@ describe('VueHZoom', () => {
       const left = 200 - (width / 2) - 50
       const expected = {
         position: 'absolute',
-        'z-index': '999',
+        'z-index': '2',
         transform: 'translateZ(0px)',
         top: vm.toPx(top),
         left: vm.toPx(left),
