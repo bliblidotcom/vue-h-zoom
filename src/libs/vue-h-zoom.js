@@ -79,7 +79,9 @@ export default {
     thumbnailStyle: function () {
       return {
         'background-image': `url(${this.image})`,
-        'background-size': 'cover',
+        'background-size': 'contain',
+        'background-repeat': 'no-repeat',
+        'background-position': '50% 50%',
         height: this.toPx(this.height),
         width: this.toPx(this.width)
       }
@@ -113,12 +115,16 @@ export default {
       return {
         'background-image': `url(${this.largeImage})`,
         'background-repeat': 'no-repeat',
-        'background-position': this.toPx(this.zoomPosX) + ' ' + this.toPx(this.zoomPosY),
-        'background-size': 'cover',
+        'background-position': '50% 50%',
+        'background-size': 'contain',
+        'background-color': '#fff',
         width: '100%',
         height: '100%',
         '-webkit-transform': `scale(${this.zoomLevel})`,
-        transform: `scale(${this.zoomLevel})`
+        transform: `
+          scale(${this.zoomLevel})
+          translate(${this.toPx(this.zoomPosX)}, ${this.toPx(this.zoomPosY)})
+        `
       }
     },
     pointerWidth: function () {
