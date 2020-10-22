@@ -155,7 +155,7 @@ export default {
     pointerBoxStyle: function () {
       return {
         position: 'absolute',
-        'z-index': '999',
+        'z-index': '2',
         transform: 'translateZ(0px)',
         top: this.toPx(this.pointerOffsetTop),
         left: this.toPx(this.pointerOffsetLeft),
