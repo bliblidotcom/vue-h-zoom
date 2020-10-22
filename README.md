@@ -78,6 +78,7 @@ webpack config:
 | zoom-window-size | Number                                          | 2 | Zoom window size multiplier, relative with thumbnail size |
 | zoom-window-x | Number                                        | 300 | Location absolute on x-axis for zoom window |
 | zoom-window-y | Number                                        | 300 | Location absolute on y-axis for zoom window |
+| containImage | Boolean | false | option to contain the image, this uses `background-size: contain;`, instead of the default `background-size: cover;`
 
 ## Preview
 
