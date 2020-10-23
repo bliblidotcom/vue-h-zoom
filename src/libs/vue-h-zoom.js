@@ -1,3 +1,11 @@
+const DEFAULT_BACKGROUND_OPTIONS = {
+  image: 'none',
+  color: '#fff',
+  repeat: false,
+  contain: true,
+  position: 'top left'
+}
+
 export default {
   name: 'vue-h-zoom',
   props: {
@@ -33,9 +41,9 @@ export default {
       type: Number,
       default: 10
     },
-    containImage: {
-      type: Boolean,
-      default: false
+    backgroundOption: {
+      type: Object,
+      default : () => DEFAULT_BACKGROUND_OPTIONS
     }
   },
   data () {
@@ -80,17 +88,30 @@ export default {
     zoomHeight: function () {
       return this.zoomWindowSize * this.height
     },
+    mainImgStyle: function () {
+      return {
+        contain: 'contain',
+        repeat: 'no-repeat',
+        position: '50% 50%'
+      }
+    },
+    backgroundImgStyle: function () {
+      // style of background, will be visible if main image is contain
+      return {
+        image: this.backgroundOption.image || DEFAULT_BACKGROUND_OPTIONS.image,
+        repeat: this.backgroundOption.repeat ? 'repeat' : 'no-repeat',
+        color: this.backgroundOption.color || DEFAULT_BACKGROUND_OPTIONS.color,
+        contain: this.backgroundOption.contain ? 'contain' : 'cover',
+        position: this.backgroundOption.position || DEFAULT_BACKGROUND_OPTIONS.position
+      }
+    },
     thumbnailStyle: function () {
-      return this.containImage ? {
-        'background-image': `url(${this.image})`,
-        'background-size': 'contain',
-        'background-repeat': 'no-repeat',
-        'background-position': '50% 50%',
-        height: this.toPx(this.height),
-        width: this.toPx(this.width)
-      } : {
-        'background-image': `url(${this.image})`,
-        'background-size': 'cover',
+      return {
+        'background-image': `url(${this.image}), url(${this.backgroundImgStyle.image})`,
+        'background-size': `${this.mainImgStyle.contain}, ${this.backgroundImgStyle.contain}`,
+        'background-repeat': `${this.mainImgStyle.repeat}, ${this.backgroundImgStyle.repeat}`,
+        'background-position': `${this.mainImgStyle.position}, ${this.backgroundImgStyle.position}`,
+        'background-color': this.backgroundImgStyle.color,
         height: this.toPx(this.height),
         width: this.toPx(this.width)
       }
@@ -121,12 +142,12 @@ export default {
       return posY
     },
     zoomStyle: function () {
-      return this.containImage ? {
-        'background-image': `url(${this.largeImage})`,
-        'background-repeat': 'no-repeat',
-        'background-position': '50% 50%',
-        'background-size': 'contain',
-        'background-color': '#fff',
+      return {
+        'background-image': `url(${this.largeImage}), url(${this.backgroundImgStyle.image})`,
+        'background-size': `${this.mainImgStyle.contain}, ${this.backgroundImgStyle.contain}`,
+        'background-repeat': `${this.mainImgStyle.repeat}, ${this.backgroundImgStyle.repeat}`,
+        'background-position': `${this.mainImgStyle.position}, ${this.backgroundImgStyle.position}`,
+        'background-color': this.backgroundImgStyle.color,
         width: '100%',
         height: '100%',
         '-webkit-transform': `scale(${this.zoomLevel})`,
@@ -134,15 +155,6 @@ export default {
           scale(${this.zoomLevel})
           translate(${this.toPx(this.zoomPosX)}, ${this.toPx(this.zoomPosY)})
         `
-      } : {
-        'background-image': `url(${this.largeImage})`,
-        'background-repeat': 'no-repeat',
-        'background-position': this.toPx(this.zoomPosX) + ' ' + this.toPx(this.zoomPosY),
-        'background-size': 'cover',
-        width: '100%',
-        height: '100%',
-        '-webkit-transform': `scale(${this.zoomLevel})`,
-        transform: `scale(${this.zoomLevel})`
       }
     },
     pointerWidth: function () {
