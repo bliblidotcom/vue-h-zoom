@@ -107,13 +107,118 @@ describe('VueHZoom', () => {
     })
   })
 
+  describe('mainImgStyle', () => {
+    it('should have correct values when backgroundOptions is falsy', () => {
+      const expected = {
+        contain: 'cover',
+        repeat: 'no-repeat',
+        position: '50% 50%'
+      }
+      assert.deepEqual(vm.mainImgStyle, expected)
+    })
+
+    it('should have correct values when backgroundOptions is truthy', done => {
+      vm = new (Vue.extend(VueHZoom))({
+        propsData: {
+          image: '/abc.jpg',
+          backgroundOptions: true
+        }
+      })
+      const expected = {
+        contain: 'contain',
+        repeat: 'no-repeat',
+        position: '50% 50%'
+      }
+      nextTick(() => {
+        assert.deepEqual(vm.mainImgStyle, expected)
+      }).then(done)
+    })
+  })
+
+  describe('customBackgroundOptions', () => {
+    it('should have correct values when backgroundOptions is falsy', () => {
+      const expected = {
+        image: 'none',
+        color: '#fff',
+        repeat: false,
+        size: '100%',
+        position: 'top left'
+      }
+      assert.deepEqual(vm.customBackgroundOptions, expected)
+    })
+
+    it('should have correct values when backgroundOptions is truthy', done => {
+      vm = new (Vue.extend(VueHZoom))({
+        propsData: {
+          image: '/abc.jpg',
+          backgroundOptions: {
+            color: 'blue'
+          }
+        }
+      })
+      const expected = {
+        color: 'blue'
+      }
+      nextTick(() => {
+        assert.deepEqual(vm.customBackgroundOptions, expected)
+      }).then(done)
+    })
+  })
+
+  describe('customBackgroundStyle', () => {
+    it('should have correct values when backgroundOptions prop is truthy but has no properties', () => {
+      vm = new (Vue.extend(VueHZoom))({
+        propsData: {
+          image: '/abc.jpg',
+          backgroundOptions: {
+            image: '/asd.jpg',
+            repeat: true,
+            color: 'blue',
+            size: '50% 100%',
+            position: 'top left'
+          }
+        }
+      })
+      const expected = {
+        image: '/asd.jpg',
+        repeat: 'repeat',
+        color: 'blue',
+        size: '50% 100%',
+        position: 'top left'
+      }
+      assert.deepEqual(vm.customBackgroundStyle, expected)
+    })
+
+    it('should have correct values when backgroundOptions is truthy', done => {
+      vm = new (Vue.extend(VueHZoom))({
+        propsData: {
+          image: '/abc.jpg',
+          backgroundOptions: {}
+        }
+      })
+      const expected = {
+        image: 'none',
+        color: '#fff',
+        repeat: 'no-repeat',
+        size: '100%',
+        position: 'top left'
+      }
+      nextTick(() => {
+        assert.deepEqual(vm.customBackgroundStyle, expected)
+      }).then(done)
+    })
+  })
+
   describe('thumbnailStyle', () => {
     it('should have correct values', () => {
       vm.height = 1000
       vm.width = 100
       const expected = {
-        'background-image': `url(${vm.image})`,
-        'background-size': 'cover',
+        'background-image': `url(${vm.image}), url(${vm.customBackgroundStyle.image})`,
+        'background-size': `${vm.mainImgStyle.contain}, ${vm.customBackgroundStyle.size}`,
+        'background-repeat': `${vm.mainImgStyle.repeat}, ${vm.customBackgroundStyle.repeat}`,
+        'background-position': `${vm.mainImgStyle.position}, ${vm.customBackgroundStyle.position}`,
+        'background-color': vm.customBackgroundStyle.color,
         height: vm.toPx(1000),
         width: vm.toPx(100)
       }
@@ -255,14 +360,18 @@ describe('VueHZoom', () => {
       const posY = -(300 - 100 - 250) * 3
 
       const expected = {
-        'background-image': `url(${vm.largeImage})`,
-        'background-repeat': 'no-repeat',
-        'background-position': vm.toPx(posX) + ' ' + vm.toPx(posY),
-        'background-size': 'cover',
+        'background-image': `url(${vm.largeImage}), url(${vm.customBackgroundStyle.image})`,
+        'background-size': `${vm.mainImgStyle.contain}, ${vm.customBackgroundStyle.size}`,
+        'background-repeat': `${vm.mainImgStyle.repeat}, ${vm.customBackgroundStyle.repeat}`,
+        'background-position': `${vm.mainImgStyle.position}, ${vm.customBackgroundStyle.position}`,
+        'background-color': vm.customBackgroundStyle.color,
         width: '100%',
         height: '100%',
         '-webkit-transform': `scale(${vm.zoomLevel})`,
-        transform: `scale(${vm.zoomLevel})`
+        transform: `
+          scale(${vm.zoomLevel})
+          translate(${vm.toPx(posX)}, ${vm.toPx(posY)})
+        `
       }
 
       assert.deepEqual(vm.zoomStyle, expected)
@@ -292,7 +401,7 @@ describe('VueHZoom', () => {
       const left = 200 - (width / 2) - 50
       const expected = {
         position: 'absolute',
-        'z-index': '999',
+        'z-index': '2',
         transform: 'translateZ(0px)',
         top: vm.toPx(top),
         left: vm.toPx(left),
