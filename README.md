@@ -68,27 +68,33 @@ webpack config:
 
 ## Parameters
 
-| Attribute        | Type                                            | Default              | Description      |
-| :---             | :---:                                           | :---:                | :---             |
-| image            | String | - | Image to be displayed in thumbnail. Used also in the zoom if imageFull param is not given (required) |
-| image-full       | String                                          | ''       | Large version of image|
-| width           | Number                                           | 200 | Width of thumbnail in px|
-| height          | Number                                           | 200 | Height of thumbnail in px|
-| zoom-level      | Number                                           | 4 | Zoom level |
-| zoom-window-size | Number                                          | 2 | Zoom window size multiplier, relative with thumbnail size |
-| zoom-window-x | Number                                        | 300 | Location absolute on x-axis for zoom window |
-| zoom-window-y | Number                                        | 300 | Location absolute on y-axis for zoom window |
-| background-options | Object | DEFAULT_BACKGROUND_OPTIONS | options to create custom background, this automatically update the image size property to `background-size: contain;`, instead of the default `background-size: cover;`
+| Attribute          | Type      | Default     | Value | Description      |
+| :---               | :---:     | :---:       | :---  | :---             |
+| image              | String    | -           | -     | Image to be displayed in thumbnail. Used also in the zoom if imageFull param is not given (required) |
+| image-full         | String    | ''          | -     | Large version of image|
+| width              | Number    | 200         | -     | Width of thumbnail in px|
+| height             | Number    | 200         | -     | Height of thumbnail in px|
+| zoom-level         | Number    | 4           | -     | Zoom level |
+| zoom-window-size   | Number    | 2           | -     | Zoom window size multiplier, relative with thumbnail size |
+| zoom-window-x      | Number    | 300         | -     | Location absolute on x-axis for zoom window |
+| zoom-window-y      | Number    | 300         | -     | Location absolute on y-axis for zoom window |
+| background-options | Object    | null        | `BACKGROUND_OPTIONS object` or `{}` or `true` | Options to create custom background. Please refer to next section for available properties |
 
-### DEFAULT_BACKGROUND_OPTIONS
+### BACKGROUND_OPTIONS
 
-| Attribute   | Type      | Default              | Description                                              |
+| Properties   | Type      | Default              | Description                                              |
 | :---        | :---      | :---                 | :---                                                     |
 | image       | String    | 'none'               | Image url to be used as background                       |
 | color       | String    | '#fff'               | Color to be used in background, use any value compatible with `background-color` css property |
 | repeat      | Boolean   | false                | Option to repeat the background image                    |
 | size        | String    | '100%'               | Set the size of background image, use any value compatible with `background-size` css property |
 | position    | String    | 'top left'           | Set the position of background image, use any value compatible with `background-position` css property |
+
+Additional notes: 
+* You can specify truthy value to use default background options, such as
+`<vue-h-zoom background-options="true" />` or `<vue-h-zoom background-options="{}" />`
+* You only need to specify property (s) that you need, such as `<vue-h-zoom background-options="{ color: 'blue' }" />`
+* Using background-options automatically update the image size property to `background-size: contain;`, instead of the default `background-size: cover;`. This is done so that the background is also included in zoomed preview.
 
 ## Preview
 
