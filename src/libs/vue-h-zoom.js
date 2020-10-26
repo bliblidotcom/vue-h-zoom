@@ -43,7 +43,7 @@ export default {
     },
     backgroundOptions: {
       type: Object,
-      default : null
+      default: null
     }
   },
   data () {
