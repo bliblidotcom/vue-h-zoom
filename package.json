@@ -1,7 +1,7 @@
 {
   "name": "vue-h-zoom",
   "description": "Native Vue Zoom images",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "hidayat.febiansyah",
     "email": "hidayat.febiansyah@gdn-commerce.com"
@@ -91,6 +91,8 @@
     "test:cover": "cross-env BABEL_ENV=test karma start config/karma.cover.conf.js",
     "test:cover-upload": "npm run test:cover && codecov",
     "test:unit": "cross-env BABEL_ENV=test karma start config/karma.unit.conf.js",
-    "build": "rm -rf dist/*.js* && webpack --config config/webpack.prod.conf.js"
+    "build": "rm -rf dist/*.js* && webpack --config config/webpack.prod.conf.js",
+    "prepublish": "npm run build"
+    
   }
 }
