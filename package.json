@@ -26,7 +26,7 @@
     "copy-webpack-plugin": "^4.3.1",
     "cross-env": "^5.0.5",
     "cross-spawn": "^5.0.1",
-    "eslint": "^4.18.2",
+    "eslint": "^3.14.1",
     "eslint-loader": "^1.6.1",
     "eslint-plugin-flowtype": "^2.30.0",
     "eslint-plugin-vue-libs": "^1.2.0",
@@ -56,7 +56,7 @@
     "vue-loader": "^13.7.0",
     "vue-template-compiler": "^2.5.13",
     "webpack": "^2.2.0",
-    "webpack-dev-server": "^3.1.11",
+    "webpack-dev-server": "^2.2.1",
     "webpack-merge": "^4.1.1"
   },
   "files": [
@@ -93,6 +93,5 @@
     "test:unit": "cross-env BABEL_ENV=test karma start config/karma.unit.conf.js",
     "build": "rm -rf dist/*.js* && webpack --config config/webpack.prod.conf.js",
     "prepublish": "npm run build"
-    
   }
 }
