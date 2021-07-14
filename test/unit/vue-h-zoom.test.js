@@ -214,7 +214,7 @@ describe('VueHZoom', () => {
       vm.height = 1000
       vm.width = 100
       const expected = {
-        'background-image': `url(${vm.image}), url(${vm.customBackgroundStyle.image})`,
+        'background-image': `url("${vm.image}"), url("${vm.customBackgroundStyle.image}")`,
         'background-size': `${vm.mainImgStyle.contain}, ${vm.customBackgroundStyle.size}`,
         'background-repeat': `${vm.mainImgStyle.repeat}, ${vm.customBackgroundStyle.repeat}`,
         'background-position': `${vm.mainImgStyle.position}, ${vm.customBackgroundStyle.position}`,
@@ -360,7 +360,7 @@ describe('VueHZoom', () => {
       const posY = -(300 - 100 - 250) * 3
 
       const expected = {
-        'background-image': `url(${vm.largeImage}), url(${vm.customBackgroundStyle.image})`,
+        'background-image': `url("${vm.largeImage}"), url("${vm.customBackgroundStyle.image}")`,
         'background-size': `${vm.mainImgStyle.contain}, ${vm.customBackgroundStyle.size}`,
         'background-repeat': `${vm.mainImgStyle.repeat}, ${vm.customBackgroundStyle.repeat}`,
         'background-position': `${vm.mainImgStyle.position}, ${vm.customBackgroundStyle.position}`,

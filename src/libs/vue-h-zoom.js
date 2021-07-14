@@ -109,7 +109,7 @@ export default {
     },
     thumbnailStyle: function () {
       return {
-        'background-image': `url(${this.image}), url(${this.customBackgroundStyle.image})`,
+        'background-image': `url("${this.image}"), url("${this.customBackgroundStyle.image}")`,
         'background-size': `${this.mainImgStyle.contain}, ${this.customBackgroundStyle.size}`,
         'background-repeat': `${this.mainImgStyle.repeat}, ${this.customBackgroundStyle.repeat}`,
         'background-position': `${this.mainImgStyle.position}, ${this.customBackgroundStyle.position}`,
@@ -145,7 +145,7 @@ export default {
     },
     zoomStyle: function () {
       return {
-        'background-image': `url(${this.largeImage}), url(${this.customBackgroundStyle.image})`,
+        'background-image': `url("${this.largeImage}"), url("${this.customBackgroundStyle.image}")`,
         'background-size': `${this.mainImgStyle.contain}, ${this.customBackgroundStyle.size}`,
         'background-repeat': `${this.mainImgStyle.repeat}, ${this.customBackgroundStyle.repeat}`,
         'background-position': `${this.mainImgStyle.position}, ${this.customBackgroundStyle.position}`,
